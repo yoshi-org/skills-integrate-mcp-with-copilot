@@ -5,7 +5,8 @@ A super simple FastAPI application that allows students to view and sign up for 
 ## Features
 
 - View all available extracurricular activities
-- Sign up for activities
+- Teacher-only student registration and removal
+- Session-based teacher login
 
 ## Getting Started
 
@@ -25,12 +26,27 @@ A super simple FastAPI application that allows students to view and sign up for 
    - API documentation: http://localhost:8000/docs
    - Alternative documentation: http://localhost:8000/redoc
 
+## Teacher Login
+
+Use the account button in the top-right corner to enter teacher mode. Local
+development credentials are stored in `teachers.json`:
+
+- Username: `teacher`
+- Password: `mergington2026`
+
+The credential file is intended for this local exercise. Production deployments
+should use hashed passwords and a persistent identity provider.
+
 ## API Endpoints
 
 | Method | Endpoint                                                          | Description                                                         |
 | ------ | ----------------------------------------------------------------- | ------------------------------------------------------------------- |
 | GET    | `/activities`                                                     | Get all activities with their details and current participant count |
-| POST   | `/activities/{activity_name}/signup?email=student@mergington.edu` | Sign up for an activity                                             |
+| POST   | `/auth/login`                                                     | Log in with a teacher username and password                          |
+| GET    | `/auth/status`                                                    | Get the current teacher session status                               |
+| POST   | `/auth/logout`                                                    | Log out of the current teacher session                               |
+| POST   | `/activities/{activity_name}/signup?email=student@mergington.edu` | Register a student; teacher login required                            |
+| DELETE | `/activities/{activity_name}/unregister?email=student@mergington.edu` | Unregister a student; teacher login required                       |
 
 ## Data Model
 
